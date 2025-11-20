@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Task Manager</h1>
+
+<!-- ADD TASK CARD -->
+<div class="add-task-card">
+
+    <label class="input-label" for="taskInput">Task Title</label>
+    <input id="taskInput" type="text" placeholder="Enter task title...">
+
+    <label class="input-label" for="descInput">Task Description</label>
+    <textarea id="descInput" placeholder="Enter description (optional)"></textarea>
+
+    <label class="input-label" for="dateInput">Scheduled Date</label>
+    <input id="dateInput" type="date">
+
+    <label class="input-label" for="timeInput">Scheduled Time</label>
+    <input id="timeInput" type="time" step="60">
+
+    <button onclick="addTask()">Add Task</button>
+</div>
+
+<!-- TWO COLUMNS FOR TASKS -->
+<div class="task-columns-container">
+
+    <!-- UPCOMING TASKS -->
+    <div class="task-column">
+        <h2>Upcoming Tasks</h2>
+        <ul id="upcomingList"></ul>
+    </div>
+
+    <!-- COMPLETED TASKS -->
+    <div class="task-column">
+        <h2>Completed Tasks</h2>
+        <ul id="completedList"></ul>
+    </div>
+
+</div>
+
+
+<!-- EDIT DESCRIPTION MODAL -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <h3>Edit Description</h3>
+
+        <textarea id="editDescInput"></textarea>
+
+        <div class="modal-buttons">
+            <button class="save-btn" onclick="saveDescription()">Save</button>
+            <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
