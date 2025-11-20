@@ -3,15 +3,15 @@ FROM eclipse-temurin:17-jdk
 WORKDIR /app
 
 # Copy Maven wrapper and config
-COPY backend/mvnw .
+COPY mvnw .
 COPY backend/mvnw.cmd .
-COPY backend/.mvn .mvn
+COPY .mvn .mvn
 
 # Copy pom.xml
-COPY backend/pom.xml .
+COPY pom.xml .
 
 # Copy source code
-COPY backend/src ./src
+COPY src ./src
 
 # Give execution permission (Linux)
 RUN chmod +x mvnw
