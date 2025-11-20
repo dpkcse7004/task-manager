@@ -2,8 +2,8 @@ FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
-COPY pom.xml .
-COPY src ./src
+COPY backend/pom.xml .
+COPY backend/src ./src
 
 RUN ./mvnw clean package -DskipTests || mvn -q clean package -DskipTests
 
