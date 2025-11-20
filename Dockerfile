@@ -2,20 +2,17 @@ FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
-# Copy Maven wrapper and pom.xml
-COPY backend/mvnw .
-COPY backend/mvnw.cmd .
+# Copy backend files
 COPY backend/pom.xml .
-
-# Copy source code
+COPY backend/mvnw .
+COPY backend/.mvn .mvn
 COPY backend/src ./src
 
+# Build the app
 RUN chmod +x mvnw
+RUN ./mvnw clean package -DskipTests
 
-# Build the jar
-RUN ./mvnw -q clean package -DskipTests
-
-# Copy the jar file
+# Copy jar file
 COPY backend/target/*.jar app.jar
 
 EXPOSE 8080
