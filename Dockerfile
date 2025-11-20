@@ -1,18 +1,20 @@
+# Use Java image
 FROM eclipse-temurin:17-jdk
 
+# Install Maven
+RUN apt update && apt install -y maven
+
+# Set working directory
 WORKDIR /app
 
-# Copy backend files
+# Copy backend code
 COPY backend/pom.xml .
-COPY backend/mvnw .
-COPY backend/.mvn .mvn
 COPY backend/src ./src
 
-# Build the app
-RUN chmod +x mvnw
-RUN ./mvnw clean package -DskipTests
+# Build using Maven
+RUN mvn clean package -DskipTests
 
-# Copy jar file
+# Copy built jar
 COPY backend/target/*.jar app.jar
 
 EXPOSE 8080
