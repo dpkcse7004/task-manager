@@ -3,7 +3,7 @@ const API_URL = "http://localhost:8080/api/tasks";
 let allTasks = [];
 let currentEditId = null;
 
-// ---------------------------------------------------
+
 function formatAMPM(date) {
     const d = new Date(date);
     let hrs = d.getHours();
@@ -20,14 +20,12 @@ function formatDate(d) {
     });
 }
 
-// ---------------------------------------------------
 async function fetchTasks() {
     const res = await fetch(API_URL);
     allTasks = await res.json();
     renderTasks();
 }
 
-// ---------------------------------------------------
 function renderTasks() {
     const upcoming = document.getElementById("upcomingList");
     const completed = document.getElementById("completedList");
@@ -35,12 +33,10 @@ function renderTasks() {
     upcoming.innerHTML = "";
     completed.innerHTML = "";
 
-    // Placeholder message for upcoming tasks
     if (allTasks.filter(t => !t.completed).length === 0) {
         upcoming.innerHTML = `<p class="empty-msg">No upcoming tasks 🎉</p>`;
     }
 
-    // Placeholder message for completed tasks
     if (allTasks.filter(t => t.completed).length === 0) {
         completed.innerHTML = `<p class="empty-msg">No completed tasks yet 😄</p>`;
     }
@@ -49,20 +45,17 @@ function renderTasks() {
         const li = document.createElement("li");
         li.className = "task-item";
 
-        const scheduled = t.scheduledDateTime
-            ? `${formatDate(t.scheduledDateTime)} • ${formatAMPM(t.scheduledDateTime)}`
-            : "---";
+        const scheduled = t.scheduledDateTime ?
+        `${formatDate(t.scheduledDateTime)} • ${formatAMPM(t.scheduledDateTime)}`: "---";
 
         li.innerHTML = `
             <div class="task-left">
                 <div class="task-title">${t.title}</div>
 
-                <!-- DESCRIPTION BOX -->
                 <div class="desc-box">
                     ${t.description || "No description added"}
                 </div>
 
-                <!-- CLEAN DATE SECTION -->
                 <div class="time-box">
                     <span><b>Created:</b> ${t.createdDate || "---"}</span><br>
                     <span><b>Scheduled:</b> ${scheduled}</span>
@@ -85,7 +78,6 @@ function renderTasks() {
 }
 
 
-// ---------------------------------------------------
 async function addTask() {
     const title = document.getElementById("taskInput").value;
     const desc = document.getElementById("descInput").value;
@@ -115,7 +107,7 @@ async function addTask() {
     fetchTasks();
 }
 
-// ---------------------------------------------------
+
 async function toggleTask(id) {
     await fetch(`${API_URL}/${id}`, { method: "PUT" });
     fetchTasks();
@@ -126,8 +118,7 @@ async function deleteTask(id) {
     fetchTasks();
 }
 
-// ---------------------------------------------------
-// EDIT DESCRIPTION MODAL
+
 function openEditModal(id, oldDesc) {
     currentEditId = id;
     document.getElementById("editDescInput").value = oldDesc;
@@ -153,5 +144,4 @@ async function saveDescription() {
     fetchTasks();
 }
 
-// ---------------------------------------------------
 fetchTasks();
