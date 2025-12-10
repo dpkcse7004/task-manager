@@ -6,14 +6,12 @@ COPY .mvn/ .mvn
 COPY mvnw .
 COPY pom.xml .
 
-
-RUN chmod +x mvnw
-
-RUN ./mvnw dependency:resolve
+# Don't rely on executable permissions (Windows issue fix)
+RUN sh mvnw dependency:resolve
 
 COPY src ./src
 
-RUN ./mvnw package -DskipTests
+RUN sh mvnw package -DskipTests
 
 EXPOSE 8080
 
