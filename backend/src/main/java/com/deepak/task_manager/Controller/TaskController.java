@@ -1,4 +1,4 @@
-package com.deepak.task_manager.controller;
+package com.deepak.task_manager.Controller;
 
 import com.deepak.task_manager.model.Task;
 import com.deepak.task_manager.Repository.TaskRepository;
@@ -18,29 +18,24 @@ public class TaskController {
         this.repo = repo;
     }
 
-    // Get all tasks
     @GetMapping
     public List<Task> getAll() {
         return repo.findAll();
     }
 
-    // Create new task
+
     @PostMapping
     public Task create(@RequestBody Task task) {
 
         task.setCompleted(false);
 
-        // Auto created date
         task.setCreatedDate(LocalDate.now());
 
-        // if no description added, keep empty
         if (task.getDescription() == null) task.setDescription("");
 
-        // If scheduledDateTime null → leave it
         return repo.save(task);
     }
 
-    // Toggle task completed
     @PutMapping("/{id}")
     public Task toggle(@PathVariable Long id) {
         Task t = repo.findById(id)
@@ -57,8 +52,6 @@ public class TaskController {
         return repo.save(task);
     }
 
-
-    // Delete task
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         repo.deleteById(id);
